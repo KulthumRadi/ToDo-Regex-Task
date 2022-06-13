@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { isValidEmail } from "../../utils";
-import "./style.css";
+import Button from "react-bootstrap/Button";
 
 export default class Login extends Component {
   constructor(props) {
@@ -91,13 +91,14 @@ export default class Login extends Component {
   render() {
     const { email, password, errors, submitted } = this.state;
     return (
-      <div className="pagecenter loginForm">
+      <div className="container mt-5">
         <form>
-          <div className="row mb-2">
-            <label htmlFor="email" className="col-sm-4 col-form-label">
+          <div className="row mb-3">
+            <div className="col-sm-2"></div>
+            <label htmlFor="email" className="col-sm-2 col-form-label">
               Email:
             </label>
-            <div className="col-sm-8">
+            <div className="col-sm-6">
               <input
                 type="text"
                 value={email}
@@ -113,12 +114,14 @@ export default class Login extends Component {
                 <span className="error">{errors.email}</span>
               )}
             </div>
+            <div className="col-sm-2"></div>
           </div>
-          <div className="row mb-2">
-            <label htmlFor="password" className="col-sm-4 col-form-label">
+          <div className="row mb-3">
+            <div className="col-sm-2"></div>
+            <label htmlFor="password" className="col-sm-2 col-form-label">
               Password:
             </label>
-            <div className="col-sm-8">
+            <div className="col-sm-6">
               <input
                 type="password"
                 value={password}
@@ -135,6 +138,7 @@ export default class Login extends Component {
                 <span className="error">{errors.password}</span>
               )}
             </div>
+            <div className="col-sm-2"></div>
           </div>
           {submitted && !this.loginStatus && (
             <div className="row mb-2 mt-4">
@@ -144,20 +148,28 @@ export default class Login extends Component {
               </div>
             </div>
           )}
-          <div className="row btn-group">
-            <div className="col-sm-5">
-              <button
+          <div className="row">
+            <div className="col-sm-2"></div>
+            <div className="col-sm-2">
+              <Link to="/register">
+                <Button className="w-100" type="submit" variant="outline-primary" size="md">
+                  REGISTER
+                </Button>
+              </Link>
+            </div>
+            <div className="col-sm-4"></div>
+            <div className="col-sm-2">
+              <Button
+                className="w-100"
                 type="submit"
-                className="button full-width"
+                variant="primary"
+                size="md"
                 onClick={this.loginForm}
               >
-                Login
-              </button>
+                LOGIN
+              </Button>
             </div>
             <div className="col-sm-2"></div>
-            <div className="col-sm-5 right">
-              <Link to="/register">Register</Link>
-            </div>
           </div>
         </form>
       </div>

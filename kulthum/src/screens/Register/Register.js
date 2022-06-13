@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { isValidEmail } from "../../utils";
-import "./style.css";
+import { isValidEmail, isValidPassword } from "../../utils";
+import { Button, Form } from "react-bootstrap";
 
 export default class Register extends Component {
   constructor(props) {
@@ -21,7 +20,7 @@ export default class Register extends Component {
           username: "Enter First Name",
           age: "",
           email: "Email is not valid!",
-          password: "Enter Password",
+          password: "Enter is not valid(min: 8, include number or character)",
           repassword: "Enter Password again",
         },
       },
@@ -46,7 +45,7 @@ export default class Register extends Component {
         errors.user.email = isValidEmail(value) ? "" : "Email is not valid!";
         break;
       case "password":
-        errors.user.password = value.length < 1 ? `Enter password` : "";
+        errors.user.password = !isValidPassword(value) ? `Enter is not valid(min: 8, include number or character)` : "";
         break;
       case "repassword":
         errors.user.repassword =
@@ -124,10 +123,11 @@ export default class Register extends Component {
     const { submitted } = this.state;
 
     return (
-      <div className="registerPanel">
-        <div className="row">
+      <div className="container mt-5">
+        <div className="row mb-2">
+          <div className="col-sm-2"></div>
           <label className="col-sm-2 col-form-label">Name</label>
-          <div className="col-sm-6 mb-2">
+          <div className="col-sm-6">
             <input
               type="text"
               value={username}
@@ -142,16 +142,17 @@ export default class Register extends Component {
               <span className="error">{this.state.errors.user.username}</span>
             )}
           </div>
-          <div className="col-sm-4"></div>
+          <div className="col-sm-2"></div>
         </div>
-        <div className="row">
+        <div className="row mb-2">
+          <div className="col-sm-2"></div>
           <label
             htmlFor="formControlAgeRange"
             className="col-sm-2 col-form-label"
           >
             Age
           </label>
-          <div className="col-sm-6 mb-2">
+          <div className="col-sm-6">
             <input
               type="number"
               value={age}
@@ -159,20 +160,21 @@ export default class Register extends Component {
               onChange={(e) => {
                 this.inputChange(e);
               }}
-              className="form-control"
+              className="form-control w-100"
               placeholder="Age"
             />
             {submitted && this.state.errors.user.age.length > 0 && (
               <span className="error">{this.state.errors.user.age}</span>
             )}
           </div>
-          <div className="col-sm-4"></div>
+          <div className="col-sm-2"></div>
         </div>
-        <div className="row">
+        <div className="row mb-2">
+          <div className="col-sm-2"></div>
           <label htmlFor="email" className="col-sm-2 col-form-label">
             Email
           </label>
-          <div className="col-sm-6 mb-2">
+          <div className="col-sm-6">
             <input
               type="email"
               value={email}
@@ -188,13 +190,14 @@ export default class Register extends Component {
               <span className="error">{this.state.errors.user.email}</span>
             )}
           </div>
-          <div className="col-sm-4"></div>
+          <div className="col-sm-2"></div>
         </div>
-        <div className="row">
+        <div className="row mb-2">
+          <div className="col-sm-2"></div>
           <label htmlFor="staticEmail1" className="col-sm-2 col-form-label">
             Password
           </label>
-          <div className="col-sm-6 mb-2">
+          <div className="col-sm-6">
             <input
               type="password"
               value={password}
@@ -210,13 +213,14 @@ export default class Register extends Component {
               <span className="error">{this.state.errors.user.password}</span>
             )}
           </div>
-          <div className="col-sm-4"></div>
+          <div className="col-sm-2"></div>
         </div>
-        <div className="row">
+        <div className="row mb-2">
+          <div className="col-sm-2"></div>
           <label htmlFor="staticEmail1" className="col-sm-2 col-form-label">
             Repassword
           </label>
-          <div className="col-sm-6 mb-2">
+          <div className="col-sm-6">
             <input
               type="password"
               value={repassword}
@@ -232,46 +236,54 @@ export default class Register extends Component {
               <span className="error">{this.state.errors.user.repassword}</span>
             )}
           </div>
-          <div className="col-sm-4"></div>
+          <div className="col-sm-2"></div>
         </div>
-        <div className="row">
+        <div className="row mb-2">
+          <div className="col-sm-2"></div>
           <label htmlFor="staticEmail1" className="col-sm-2 col-form-label">
             Post
           </label>
-          <div className="col-sm-6 mb-2">
-            <select
-              className="custom-select mb-2"
+          <div className="col-sm-6">
+            <Form.Select
+              aria-label="Default select example"
+              className="w-100"
               value={post}
-              id="inlineFormCustomSelect"
               onChange={(e) => {
                 this.inputChange(e);
               }}
             >
               <option value="dev">Software Developer</option>
               <option value="ceo">CEO</option>
-            </select>
+            </Form.Select>
           </div>
+          <div className="col-sm-2"></div>
         </div>
         {submitted && !this.registStatus && (
-          <div className="row mb-2 mt-4">
+          <div className="row mb-2 mt-2 mb-2">
             <div className="col-sm-2"></div>
             <div className="col-sm-8">
               <span className="error">{this.state.registStatus}</span>
             </div>
           </div>
         )}
-        <div className="row mb-2">
-          <div className="col-sm-1"></div>
+        <div className="row">
+          <div className="col-sm-2"></div>
           <div className="col-sm-2">
-            <Link to={"/login"}>login</Link>
+            <Link to={"/login"}>
+              <Button className="w-100" variant="outline-primary">LOGIN</Button>
+            </Link>
           </div>
-          <div className="col-sm-3"></div>
+          <div className="col-sm-4"></div>
           <div className="col-sm-2">
-            <button type="button" className="button" onClick={this.submitForm}>
-              Submit
-            </button>
+            <Button
+              varient="primary"
+              className="w-100"
+              onClick={this.submitForm}
+            >
+              SIGN UP
+            </Button>
           </div>
-          <div className="col-sm-3"></div>
+          <div className="col-sm-2"></div>
         </div>
       </div>
     );
